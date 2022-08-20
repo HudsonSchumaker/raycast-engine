@@ -159,7 +159,19 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\Splash.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\include\Common.hpp" />
+    <ClInclude Include="src\include\Engine.hpp" />
+    <ClInclude Include="src\include\Main.h" />
+    <ClInclude Include="src\include\Splash.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="data\joypad.png" />
+    <Image Include="data\logo.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
