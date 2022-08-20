@@ -4,9 +4,9 @@
     Hudson Schumaker
 */
 
-#include "include/Common.hpp"
-#include "include/Splash.hpp"
+
 #include "include/Main.h"
+#include "include/Engine.hpp"
 
 SDL_Window* window = nullptr;
 SDL_Renderer* renderer = nullptr;
@@ -14,7 +14,7 @@ SDL_Renderer* renderer = nullptr;
 int main(int argc, char* argv[]) {
     setUp();
     splash();
-   
+    core();
     quit();
     return 0;
 }
@@ -35,6 +35,7 @@ void setUp() {
 
     SDL_Surface* iconSurface = IMG_Load("data/joypad.png");
     SDL_SetWindowIcon(window, iconSurface);
+    SDL_FreeSurface(iconSurface);
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 256);
@@ -45,7 +46,15 @@ void splash() {
     delete splash;
 }
 
+void core() {
+    Engine* engine = new Engine(renderer);
+    engine->start();
+    delete engine;
+}
+
 void quit() {
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
     SDL_Quit();
     IMG_Quit();
     TTF_Quit();
