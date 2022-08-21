@@ -29,20 +29,20 @@ void Player::move(float deltaTime, Map* map) {
 }
 
 void Player::render(SDL_Renderer* renderer) {
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+    SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
     SDL_Rect playerRect = {
-        x * Common::MINIMAP_SCALE_FACTOR,
-        y * Common::MINIMAP_SCALE_FACTOR,
-        w * Common::MINIMAP_SCALE_FACTOR,
-        h * Common::MINIMAP_SCALE_FACTOR
+        x * Common::MINIMAP_SCALE,
+        y * Common::MINIMAP_SCALE,
+        w * Common::MINIMAP_SCALE,
+        h * Common::MINIMAP_SCALE
     };
     SDL_RenderFillRect(renderer, &playerRect);
 
     SDL_RenderDrawLine(
         renderer,
-        Common::MINIMAP_SCALE_FACTOR * x,
-        Common::MINIMAP_SCALE_FACTOR * y,
-        Common::MINIMAP_SCALE_FACTOR * (x + cos(rotationAngle) * 40),
-        Common::MINIMAP_SCALE_FACTOR * (y + sin(rotationAngle) * 40)
+        Common::MINIMAP_SCALE * x,
+        Common::MINIMAP_SCALE * y,
+        Common::MINIMAP_SCALE * (x + cos(rotationAngle) * 40),
+        Common::MINIMAP_SCALE * (y + sin(rotationAngle) * 40)
     );
 }
