@@ -29,6 +29,5 @@ public:
     Map();
     ~Map() = default;
     
-    auto getMap();
     void render(SDL_Renderer* renderer);
 };

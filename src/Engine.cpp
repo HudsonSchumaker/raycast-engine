@@ -19,7 +19,7 @@ void Engine::loop() {
     isRunning = true;
     while (isRunning) {
         input();
-        update();
+        update(); 
         render();
     }
 }
@@ -33,7 +33,7 @@ void Engine::update() {
 
     float deltaTime = (SDL_GetTicks() - ticksLastFrame) / 1000.0f;
     ticksLastFrame = SDL_GetTicks();
-
+    
     player.move(deltaTime);
 
 }
@@ -93,6 +93,6 @@ void Engine::load() {
     player.walkDirection = 0;
     player.rotationAngle = Common::PI / 2;
     player.walkSpeed = 100;
-    player.turnSpeed = 45 * (Common::PI / 180);
+    player.turnSpeed = Common::degrees2Radians(45);
 
 }

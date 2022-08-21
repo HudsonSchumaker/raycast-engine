@@ -8,10 +8,6 @@
 
 Map::Map() {}
 
-auto Map::getMap() {
-    return map;
-}
-
 void Map::render(SDL_Renderer* renderer) {
     for (int i = 0; i < Common::MAP_NUM_ROWS; i++) {
         for (int j = 0; j < Common::MAP_NUM_COLS; j++) {

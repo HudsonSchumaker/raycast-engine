@@ -38,4 +38,8 @@ public:
     constexpr static float MINIMAP_SCALE_FACTOR = 1.0f;
     constexpr static float FPS = 144.0f;
     constexpr static float FRAME_TIME_LENGTH = 1000.0f / FPS;
+
+    static float degrees2Radians(float degress) {
+        return degress * (PI / 180);
+    }
 };
