@@ -15,16 +15,17 @@ Player::Player() {
     turnSpeed = 0.0f;
 }
 
-void Player::move(float deltaTime) {
+void Player::move(float deltaTime, Map* map) {
     rotationAngle += turnDirection * turnSpeed * deltaTime;
     float moveStep = walkDirection * walkSpeed * deltaTime;
 
     float newPlayerX = x + cos(rotationAngle) * moveStep;
     float newPlayerY = y + sin(rotationAngle) * moveStep;
 
-    x = newPlayerX;
-    y = newPlayerY;
-    
+    if (!map->hasWallAt(newPlayerX, newPlayerY)) {
+        x = newPlayerX;
+        y = newPlayerY;
+    }
 }
 
 void Player::render(SDL_Renderer* renderer) {
