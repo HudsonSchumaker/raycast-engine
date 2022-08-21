@@ -49,7 +49,133 @@ void Engine::castAllRays() {
 }
 
 void Engine::castRay(float rayAngle, int stripId) {
+    rayAngle = Common::normalizeAngle(rayAngle);
 
+    bool isRayFacingDown = rayAngle > 0 && rayAngle < Common::PI;
+    bool isRayFacingUp = !isRayFacingDown;
+
+    bool isRayFacingRight = rayAngle < 0.5 * Common::PI || rayAngle > 1.5 * Common::PI;
+    bool isRayFacingLeft = !isRayFacingRight;
+
+    float xintercept, yintercept;
+    float xstep, ystep;
+
+    ///////////////////////////////////////////
+    // HORIZONTAL RAY-GRID INTERSECTION CODE
+    ///////////////////////////////////////////
+    bool foundHorzWallHit = false;
+    float horzWallHitX = 0;
+    float horzWallHitY = 0;
+    int horzWallContent = 0;
+
+    // Find the y-coordinate of the closest horizontal grid intersection
+    yintercept = floor(player.y / Common::TILE_SIZE) * Common::TILE_SIZE;
+    yintercept += isRayFacingDown ? Common::TILE_SIZE : 0;
+
+    // Find the x-coordinate of the closest horizontal grid intersection
+    xintercept = player.x + (yintercept - player.y) / tan(rayAngle);
+
+    // Calculate the increment xstep and ystep
+    ystep = Common::TILE_SIZE;
+    ystep *= isRayFacingUp ? -1 : 1;
+
+    xstep = Common::TILE_SIZE / tan(rayAngle);
+    xstep *= (isRayFacingLeft && xstep > 0) ? -1 : 1;
+    xstep *= (isRayFacingRight && xstep < 0) ? -1 : 1;
+
+    float nextHorzTouchX = xintercept;
+    float nextHorzTouchY = yintercept;
+
+    // Increment xstep and ystep until we find a wall VERTICAL
+    while (nextHorzTouchX >= 0 && nextHorzTouchX <= Common::WIDTH && nextHorzTouchY >= 0 && nextHorzTouchY <= Common::HEIGHT) {
+        float xToCheck = nextHorzTouchX;
+        float yToCheck = nextHorzTouchY + (isRayFacingUp ? -1 : 0);
+
+        if (map.hasWallAt(xToCheck, yToCheck)) {
+            // found a wall hit
+            horzWallHitX = nextHorzTouchX;
+            horzWallHitY = nextHorzTouchY;
+            horzWallContent = map.getCellValue((int)floor(yToCheck / Common::TILE_SIZE), (int)floor(xToCheck / Common::TILE_SIZE));
+            foundHorzWallHit = true;
+            break;
+        }
+        else {
+            nextHorzTouchX += xstep;
+            nextHorzTouchY += ystep;
+        }
+    }
+
+    ///////////////////////////////////////////
+    // VERTICAL RAY-GRID INTERSECTION CODE
+    ///////////////////////////////////////////
+    bool foundVertWallHit = false;
+    float vertWallHitX = 0;
+    float vertWallHitY = 0;
+    int vertWallContent = 0;
+
+    // Find the x-coordinate of the closest horizontal grid intersection
+    xintercept = floor(player.x / Common::TILE_SIZE) * Common::TILE_SIZE;
+    xintercept += isRayFacingRight ? Common::TILE_SIZE : 0;
+
+    // Find the y-coordinate of the closest horizontal grid intersection
+    yintercept = player.y + (xintercept - player.x) * tan(rayAngle);
+
+    // Calculate the increment xstep and ystep
+    xstep = Common::TILE_SIZE;
+    xstep *= isRayFacingLeft ? -1 : 1;
+
+    ystep = Common::TILE_SIZE * tan(rayAngle);
+    ystep *= (isRayFacingUp && ystep > 0) ? -1 : 1;
+    ystep *= (isRayFacingDown && ystep < 0) ? -1 : 1;
+
+    float nextVertTouchX = xintercept;
+    float nextVertTouchY = yintercept;
+
+    // Increment xstep and ystep until we find a wall HORIZONTAL
+    while (nextVertTouchX >= 0 && nextVertTouchX <= Common::WIDTH && nextVertTouchY >= 0 && nextVertTouchY <= Common::HEIGHT) {
+        float xToCheck = nextVertTouchX + (isRayFacingLeft ? -1 : 0);
+        float yToCheck = nextVertTouchY;
+
+        if (map.hasWallAt(xToCheck, yToCheck)) {
+            // found a wall hit
+            vertWallHitX = nextVertTouchX;
+            vertWallHitY = nextVertTouchY;
+            vertWallContent = map.getCellValue((int)floor(yToCheck / Common::TILE_SIZE), (int)floor(xToCheck / Common::TILE_SIZE));
+            foundVertWallHit = true;
+            break;
+        }
+        else {
+            nextVertTouchX += xstep;
+            nextVertTouchY += ystep;
+        }
+    }
+
+    // Calculate both horizontal and vertical hit distances and choose the smallest one
+    float horzHitDistance = foundHorzWallHit
+        ? Common::distanceBetweenPoints(player.x, player.y, horzWallHitX, horzWallHitY)
+        : FLT_MAX;
+    float vertHitDistance = foundVertWallHit
+        ? Common::distanceBetweenPoints(player.x, player.y, vertWallHitX, vertWallHitY)
+        : FLT_MAX;
+
+    if (vertHitDistance < horzHitDistance) {
+        rays[stripId].distance = vertHitDistance;
+        rays[stripId].wallHitX = vertWallHitX;
+        rays[stripId].wallHitY = vertWallHitY;
+        rays[stripId].wallHitContent = vertWallContent;
+        rays[stripId].wasHitVertical = true;
+    } else {
+        rays[stripId].distance = horzHitDistance;
+        rays[stripId].wallHitX = horzWallHitX;
+        rays[stripId].wallHitY = horzWallHitY;
+        rays[stripId].wallHitContent = horzWallContent;
+        rays[stripId].wasHitVertical = false;
+    }
+    rays[stripId].rayAngle = rayAngle;
+    rays[stripId].isRayFacingDown = isRayFacingDown;
+    rays[stripId].isRayFacingUp = isRayFacingUp;
+    rays[stripId].isRayFacingLeft = isRayFacingLeft;
+    rays[stripId].isRayFacingRight = isRayFacingRight;
 }
 
 void Engine::input() {
@@ -104,14 +230,13 @@ void Engine::renderRays() {
     for (int i = 0; i < Common::NUM_RAYS; i++) {
         SDL_RenderDrawLine(
             renderer,
-            Common::MINIMAP_SCALE_FACTOR * player.x,
-            Common::MINIMAP_SCALE_FACTOR * player.y,
-            Common::MINIMAP_SCALE_FACTOR * rays[i].wallHitX,
-            Common::MINIMAP_SCALE_FACTOR * rays[i].wallHitY
+            Common::MINIMAP_SCALE * player.x,
+            Common::MINIMAP_SCALE * player.y,
+            Common::MINIMAP_SCALE * rays[i].wallHitX,
+            Common::MINIMAP_SCALE * rays[i].wallHitY
         );
     }
 }
-
 
 void Engine::load() {
     player.x = Common::H_WIDTH;
@@ -123,5 +248,4 @@ void Engine::load() {
     player.rotationAngle = 3 * Common::PI / 2;
     player.walkSpeed = 100;
     player.turnSpeed = Common::degrees2Radians(45);
-
 }
