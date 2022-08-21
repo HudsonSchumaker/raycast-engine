@@ -23,16 +23,20 @@ void Map::render(SDL_Renderer* renderer) {
         for (int j = 0; j < Common::MAP_NUM_COLS; j++) {
             int tileX = j * Common::TILE_SIZE;
             int tileY = i * Common::TILE_SIZE;
-            int tileColor = map[i][j] != 0 ? 255 : 0;
+            int tileColor = map[i][j] != 0 ? 200 : 0;
 
             SDL_SetRenderDrawColor(renderer, tileColor, tileColor, tileColor, 255);
             SDL_Rect mapTileRect = {
-                tileX * Common::MINIMAP_SCALE_FACTOR,
-                tileY * Common::MINIMAP_SCALE_FACTOR,
-                Common::TILE_SIZE * Common::MINIMAP_SCALE_FACTOR,
-                Common::TILE_SIZE * Common::MINIMAP_SCALE_FACTOR
+                tileX * Common::MINIMAP_SCALE,
+                tileY * Common::MINIMAP_SCALE,
+                Common::TILE_SIZE * Common::MINIMAP_SCALE,
+                Common::TILE_SIZE * Common::MINIMAP_SCALE
             };
             SDL_RenderFillRect(renderer, &mapTileRect);
         }
     }
+}
+
+int Map::getCellValue(int i, int j) {
+    return map[i][j];
 }
