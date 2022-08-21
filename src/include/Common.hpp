@@ -6,9 +6,8 @@
 
 #pragma once
 
-#include <math.h>
-#include <stdio.h>
-#include <iostream>
+#include <limits.h>
+#include <float.h>
 
 #include <SDL.h>
 #include <SDL_image.h>
