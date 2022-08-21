@@ -31,4 +31,5 @@ public:
     
     bool hasWallAt(const float x, const float y);
     void render(SDL_Renderer* renderer);
+    int getCellValue(int i, int j);
 };
