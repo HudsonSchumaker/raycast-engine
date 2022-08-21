@@ -35,6 +35,20 @@ void Engine::update() {
     ticksLastFrame = SDL_GetTicks();
     
     player.move(deltaTime);
+    castAllRays();
+
+}
+
+void Engine::castAllRays() {
+    float rayAngle = player.rotationAngle - (Common::FOV_ANGLE / 2);
+
+    for (int stripId = 0; stripId < Common::NUM_RAYS; stripId++) {
+        castRay(rayAngle, stripId);
+        rayAngle += Common::FOV_ANGLE / Common::NUM_RAYS;
+    }
+}
+
+void Engine::castRay(float rayAngle, int stripId) {
 
 }
 

@@ -29,5 +29,6 @@ public:
     Map();
     ~Map() = default;
     
+    bool hasWallAt(float x, float y);
     void render(SDL_Renderer* renderer);
 };

@@ -23,6 +23,8 @@ private:
     void update();
     void render();
     void loop();
+    void castRay(float rayAngle, int stripId);
+    void castAllRays();
     
 public:
     Engine(SDL_Renderer* renderer);

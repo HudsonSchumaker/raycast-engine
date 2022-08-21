@@ -21,22 +21,24 @@ class Common final {
 
 public:
     inline static const char TITLE[] = "- Raycast -";
-    static const unsigned short WIDTH = 800;
+    static const unsigned short TILE_SIZE = 64;
+    static const unsigned short MAP_NUM_COLS = 20;
+    static const unsigned short MAP_NUM_ROWS = 13;
+    
+    static const unsigned short WIDTH = (MAP_NUM_COLS * TILE_SIZE);
     static const unsigned short H_WIDTH = WIDTH / 2;
-    static const unsigned short HEIGHT = 600;
+    static const unsigned short HEIGHT = (MAP_NUM_ROWS * TILE_SIZE);
     static const unsigned short H_HEIGHT = HEIGHT / 2;
-
-    static const short TILE_SIZE = 32;
-    static const short MAP_NUM_ROWS = 13;
-    static const short MAP_NUM_COLS = 20;
-
+    
     constexpr static double PI = 3.14159265;
     constexpr static double TWO_PI = 6.28318530;
+    constexpr static float FPS = 144.0f;
+    constexpr static float FRAME_TIME_LENGTH = 1000.0f / FPS;
     
     constexpr static double FOV_ANGLE = (60 * (PI / 180));
     constexpr static float MINIMAP_SCALE_FACTOR = 1.0f;
-    constexpr static float FPS = 144.0f;
-    constexpr static float FRAME_TIME_LENGTH = 1000.0f / FPS;
+    static const unsigned short NUM_RAYS = WIDTH;
+    
 
     static float degrees2Radians(float degress) {
         return degress * (PI / 180);

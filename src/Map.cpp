@@ -8,6 +8,15 @@
 
 Map::Map() {}
 
+bool Map::hasWallAt(float x, float y) {
+    if (x < 0 || x > Common::WIDTH || y < 0 || y > Common::HEIGHT) {
+        return TRUE;
+    }
+    int mapGridIndexX = floor(x / Common::TILE_SIZE);
+    int mapGridIndexY = floor(y / Common::TILE_SIZE);
+    return map[mapGridIndexY][mapGridIndexX] != 0;
+}
+
 void Map::render(SDL_Renderer* renderer) {
     for (int i = 0; i < Common::MAP_NUM_ROWS; i++) {
         for (int j = 0; j < Common::MAP_NUM_COLS; j++) {
