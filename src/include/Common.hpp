@@ -36,11 +36,23 @@ public:
     constexpr static float FRAME_TIME_LENGTH = 1000.0f / FPS;
     
     constexpr static double FOV_ANGLE = (60 * (PI / 180));
-    constexpr static float MINIMAP_SCALE_FACTOR = 1.0f;
+    constexpr static const float MINIMAP_SCALE_FACTOR = 1.0f;
     static const unsigned short NUM_RAYS = WIDTH;
     
 
     static float degrees2Radians(float degress) {
         return degress * (PI / 180);
+    }
+
+    static float normalizeAngle(float angle) {
+        angle = remainder(angle, TWO_PI);
+        if (angle < 0) {
+            angle = TWO_PI + angle;
+        }
+        return angle;
+    }
+
+    static float distanceBetweenPoints(float x1, float y1, float x2, float y2) {
+        return sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
     }
 };
