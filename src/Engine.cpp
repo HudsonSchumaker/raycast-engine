@@ -34,7 +34,7 @@ void Engine::update() {
     float deltaTime = (SDL_GetTicks() - ticksLastFrame) / 1000.0f;
     ticksLastFrame = SDL_GetTicks();
     
-    player.move(deltaTime);
+    player.move(deltaTime, &map);
     castAllRays();
 
 }
@@ -93,10 +93,25 @@ void Engine::render() {
     SDL_RenderClear(renderer);
 
     map.render(renderer);
+    renderRays();
     player.render(renderer);
 
     SDL_RenderPresent(renderer);
 }
+
+void Engine::renderRays() {
+    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+    for (int i = 0; i < Common::NUM_RAYS; i++) {
+        SDL_RenderDrawLine(
+            renderer,
+            Common::MINIMAP_SCALE_FACTOR * player.x,
+            Common::MINIMAP_SCALE_FACTOR * player.y,
+            Common::MINIMAP_SCALE_FACTOR * rays[i].wallHitX,
+            Common::MINIMAP_SCALE_FACTOR * rays[i].wallHitY
+        );
+    }
+}
+
 
 void Engine::load() {
     player.x = Common::H_WIDTH;
@@ -105,7 +120,7 @@ void Engine::load() {
     player.h = 2;
     player.turnDirection = 0;
     player.walkDirection = 0;
-    player.rotationAngle = Common::PI / 2;
+    player.rotationAngle = 3 * Common::PI / 2;
     player.walkSpeed = 100;
     player.turnSpeed = Common::degrees2Radians(45);
 

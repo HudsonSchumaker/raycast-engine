@@ -6,6 +6,7 @@
 
 #pragma once
 #include "Common.hpp"
+#include "include/Map.hpp"
 
 class Player final {
 public:
@@ -19,5 +20,5 @@ public:
     Player();
     ~Player() = default;
     void render(SDL_Renderer* renderer);
-    void move(float deltaTime);
+    void move(float deltaTime, Map* map);
 };
