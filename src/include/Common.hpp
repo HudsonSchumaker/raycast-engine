@@ -7,8 +7,7 @@
 #pragma once
 
 #include <math.h>
-#include <Windows.h>
-#include <string>
+#include <stdio.h>
 #include <iostream>
 
 #include <SDL.h>
