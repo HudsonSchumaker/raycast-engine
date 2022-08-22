@@ -9,6 +9,7 @@
 #include "Player.hpp" 
 #include "Map.hpp" 
 #include "Ray.hpp" 
+#include "ColorBuffer.hpp" 
 
 class Engine final {
 private:
@@ -16,7 +17,7 @@ private:
     Player player;
     Map map;
     Ray rays[Common::NUM_RAYS];
-    uint32_t* colorBuffer = nullptr;
+    ColorBuffer colorBuffer;
 
     bool isRunning = false;
     int ticksLastFrame = 0;
