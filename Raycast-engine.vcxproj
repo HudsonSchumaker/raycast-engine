@@ -159,6 +159,7 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\ColorBuffer.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Map.cpp" />
@@ -167,6 +168,7 @@
     <ClCompile Include="src\Splash.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\include\ColorBuffer.hpp" />
     <ClInclude Include="src\include\Common.hpp" />
     <ClInclude Include="src\include\Engine.hpp" />
     <ClInclude Include="src\include\Main.h" />
