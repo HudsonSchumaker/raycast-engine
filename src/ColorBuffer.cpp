@@ -22,6 +22,11 @@ ColorBuffer::ColorBuffer(SDL_Renderer* renderer) {
     );
 }
 
+ColorBuffer::~ColorBuffer() {
+    free(colorBuffer);
+    SDL_DestroyTexture(colorBufferTexture);
+}
+
 void ColorBuffer::clear() {
     clear(0xFF888888); // gray
 }
@@ -40,5 +45,4 @@ void ColorBuffer::render() {
         (int)(Common::WIDTH * sizeof(uint32_t))
     );
     SDL_RenderCopy(renderer, colorBufferTexture, NULL, NULL);
-
 }

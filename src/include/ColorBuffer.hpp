@@ -4,7 +4,6 @@
     Hudson Schumaker
 */
 
-
 #pragma once
 #include "Common.hpp"
 
@@ -15,9 +14,8 @@ private:
     SDL_Texture* colorBufferTexture;
 
 public:
-    ColorBuffer() = default;
     ColorBuffer(SDL_Renderer* renderer);
-    ~ColorBuffer() = default;
+    ~ColorBuffer();
 
     void clear();
     void clear(uint32_t color);

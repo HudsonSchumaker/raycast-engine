@@ -17,7 +17,7 @@ private:
     Player player;
     Map map;
     Ray rays[Common::NUM_RAYS];
-    ColorBuffer colorBuffer;
+    ColorBuffer* colorBuffer = nullptr;
 
     bool isRunning = false;
     int ticksLastFrame = 0;
