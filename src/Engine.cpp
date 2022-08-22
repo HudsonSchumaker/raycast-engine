@@ -218,6 +218,9 @@ void Engine::render() {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
 
+    colorBuffer.render();
+    colorBuffer.clear();
+
     map.render(renderer);
     renderRays();
     player.render(renderer);
@@ -248,4 +251,6 @@ void Engine::load() {
     player.rotationAngle = 3 * Common::PI / 2;
     player.walkSpeed = 100;
     player.turnSpeed = Common::degrees2Radians(45);
+
+    colorBuffer = ColorBuffer(renderer);
 }
