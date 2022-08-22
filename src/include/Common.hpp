@@ -35,7 +35,7 @@ public:
     constexpr static double PI = 3.14159265;
     constexpr static double TWO_PI = 6.28318530;
     constexpr static double FOV_ANGLE = (60 * (PI / 180));
-    constexpr static const float MINIMAP_SCALE = 1.0f;
+    constexpr static const float MINIMAP_SCALE = 0.2f;
     static const unsigned short NUM_RAYS = WIDTH;
     
     static float degrees2Radians(float degress) {
