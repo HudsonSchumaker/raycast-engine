@@ -20,6 +20,6 @@ public:
     void clear();
     void clear(uint32_t color);
     void render();
-
+    void setColorBuffer(int index, uint32_t color);
 };
 
