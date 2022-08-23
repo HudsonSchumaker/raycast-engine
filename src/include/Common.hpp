@@ -20,7 +20,7 @@ class Common final {
 
 public:
     inline static const char TITLE[] = "- Raycast -";
-    constexpr static float FPS = 60.0f;
+    constexpr static float FPS = 144.0f;
     constexpr static float FRAME_TIME_LENGTH = 1000.0f / FPS;
 
     static const unsigned short TILE_SIZE = 64;

@@ -27,9 +27,7 @@ private:
     void update();
     void render();
     void loop();
-    void castRay(float rayAngle, int stripId);
-    void castAllRays();
-    void renderRays();
+    void generate3DProjection();
     
 public:
     Engine(SDL_Renderer* renderer);
