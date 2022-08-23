@@ -103,10 +103,17 @@ void Engine::generate3DProjection() {
         int wallBottomPixel = (Common::HEIGHT / 2) + (wallStripHeight / 2);
         wallBottomPixel = wallBottomPixel > Common::HEIGHT ? Common::HEIGHT : wallBottomPixel;
 
+        // set the color of the ceiling
+        for (int y = 0; y < wallTopPixel; y++)
+            colorBuffer->setColorBuffer((Common::WIDTH * y) + i, 0xFF333333);
+
         // render the wall from wallTopPixel to wallBottomPixel
-        for (int y = wallTopPixel; y < wallBottomPixel; y++) {
+        for (int y = wallTopPixel; y < wallBottomPixel; y++)
             colorBuffer->setColorBuffer((Common::WIDTH * y) + i, rays[i].wasHitVertical ? 0xFFFFFFFF : 0xFFCCCCCC);
-        }
+        
+        // set the color of the floor
+        for (int y = wallBottomPixel; y < Common::HEIGHT; y++)
+            colorBuffer->setColorBuffer((Common::WIDTH * y) + i, 0xFF777777);
     }
 }
 
