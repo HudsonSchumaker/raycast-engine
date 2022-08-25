@@ -46,6 +46,7 @@ void ColorBuffer::render() {
     );
     SDL_RenderCopy(renderer, colorBufferTexture, NULL, NULL);
 }
+
 void ColorBuffer::setColorBuffer(int index, uint32_t color) {
     colorBuffer[index] = color;
 }
