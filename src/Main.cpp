@@ -4,7 +4,6 @@
     Hudson Schumaker
 */
 
-
 #include "include/Main.h"
 #include "include/Engine.hpp"
 
